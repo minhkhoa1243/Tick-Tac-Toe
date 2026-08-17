@@ -7,11 +7,12 @@ import typing
 class TickTacToe:
     
 
-    symbol_number_encode = defaultdict(int)
-    number_symbol_encode = defaultdict(str)
     
     def __init__(self, mark1 = 'X', mark2 = 'O'):
         self.grid = np.array([[0] * 3 for i in range(3)])
+        
+        self.symbol_number_encode = defaultdict(int)
+        self.number_symbol_encode = defaultdict(str)
         
         self.symbol_number_encode['_'] = 0
         self.number_symbol_encode[0] = '_'
@@ -31,16 +32,22 @@ class TickTacToe:
         print("")
             
         
-    def mark(self, x: int, y: int, symbol: int):
-        if self.grid[x][y] != 0:
-            print("You can't choose this, this was occupied !!! \n Please choose again")
-        else:
-            self.grid[x][y] = self.symbol_number_encode[symbol] # Convert symbol to numerical values 
+    def mark(self, x: int, y: int, symbol):
+        while True:
+            
+            if self.grid[x][y] != 0:
+                print("You can't choose this, this was occupied !!! \n Please choose again")
+                print("Input row")
+                x = int(input())
+                print("Input col")
+                y = int(input())
+            else:
+                self.grid[x][y] = self.symbol_number_encode[symbol] # Convert symbol to numerical values
+                return
+             
     
     
     def checkWinner(self):
-        self.win = True
-        
         # Check the horizontal
         for i in range(3):
             pre = self.grid[i][0]
@@ -50,12 +57,12 @@ class TickTacToe:
             
             for j in range(1,3):
                 if self.grid[i][j] != pre:
-                    win = False
+                    self.win = False
             
             if self.win:
-                print(f"The winner is: {self.number_symbol_encode[pre]}")
-                return                    
-            
+                print(f"1 The winner is: {self.number_symbol_encode[pre]}")
+                return               
+        
         # Check the vertical 
         for i in range(3):
             pre = self.grid[0][i]
@@ -68,9 +75,10 @@ class TickTacToe:
                     self.win = False
 
             if self.win:
-                print(f"The winner is: {self.number_symbol_encode[pre]}")
+                print(f"2 The winner is: {self.number_symbol_encode[pre]}")
                 return  
-            
+ 
+
         # Check the diagonal
         pre = self.grid[0][0]
         if pre != 0:
@@ -80,7 +88,7 @@ class TickTacToe:
                     self.win = False
             
             if self.win:
-                print(f"The winner is: {self.number_symbol_encode[pre]}")
+                print(f"3 The winner is: {self.number_symbol_encode[pre]}")
                 return  
         
         # Check the diagonal 
@@ -92,9 +100,10 @@ class TickTacToe:
                     self.win = False
             
             if self.win:
-                print(f"The winner is: {self.number_symbol_encode[pre]}")
+                print(f"4 The winner is: {self.number_symbol_encode[pre]}")
                 return  
-            
+        self.win = False  
+          
 
     def clear(self):
         self.grid = [[0] * 3 for _ in range(3)]

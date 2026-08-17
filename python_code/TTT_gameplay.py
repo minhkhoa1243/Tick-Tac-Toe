@@ -9,8 +9,10 @@ class TTT_gameplay(TickTacToe):
     
     
     def __init__(self):
-        mark1 = input("Choose your mark: (Player1)")
-        mark2 = input("Choose your mark: (Player2)")
+        # mark1 = input("Choose your mark: (Player1)")
+        # mark2 = input("Choose your mark: (Player2)")
+        mark1 = "X"
+        mark2 = "O"
         super().__init__(mark1, mark2)
         
         self.first = self.chooseFirst()
@@ -26,32 +28,51 @@ class TTT_gameplay(TickTacToe):
         current_player = self.first
         print(f"First player to move is : {self.number_symbol_encode[current_player]}")
         
+        # self.mark(1, 2, "X")
+        # self.mark(2,1,"X")
+        # self.mark(0,1,"X")
+        # self.printGrid()
+        # self.checkWinner()
+        
+        
         while not self.win:
+            
+            print(f"Current player is : {self.number_symbol_encode[current_player]}")
+            
+            print("Input Row")
+            row = int(input())
+            print("Input Col")
+            col = int(input())
+            
+            self.mark(row, col, self.number_symbol_encode[current_player])
+            
             self.printGrid()
-            print(f"Player {self.number_symbol_encode[current_player]} turn")
-            row ,col = 0, 0
-             
-            while row < 1 or row > 3 or col < 1 or col > 3:
-                move = input("Please enter again the valid grid")
-                row, col = map(int, move.split()) # To convert string to int
-            row -= 1
-            col -= 1
-            self.mark(row, col, current_player)
+            print(" Pass this !!! ")
             self.checkWinner()
             
             current_player = -current_player
             
             
             
-            
+        
+        
+         
+         
+    def test(self):
+        self.mark(1, 2, "X")
+        self.mark(2,1,"X")
+        self.mark(0,1,"X")
+        self.printGrid()
+        self.checkWinner()
+        print(self.win)
+
+
 
 # %%
 def main():
     game = TTT_gameplay()
-    
     game.gameplay()
     
-
 
 if __name__ == "__main__":
     main()
